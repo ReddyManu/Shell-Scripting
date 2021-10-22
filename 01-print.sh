@@ -2,3 +2,5 @@
 
 echo Hello World
 echo My first work in IntelliJ
+
+echo -e "Testing\nESC sequence"
