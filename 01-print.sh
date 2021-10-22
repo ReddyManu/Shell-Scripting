@@ -17,3 +17,4 @@ echo -e "\e[36mTestColourCyan"
 
 echo -e "\e[35mTest Colour Magenta\e[0m"
 echo Test Colour White
+
