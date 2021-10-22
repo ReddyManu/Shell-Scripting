@@ -20,3 +20,5 @@ echo Hello, todays date is $DATE
 ADD=$((4+5+6+5+6*7/2-5))
 
 echo Calculation value = $ADD
+
+echo COURSE NAME = $COURSE_NAME
