@@ -5,7 +5,7 @@ function abc() {
 }
 
 xyz () {
-  My weight is 74.2 kgs
+  echo My weight is 74.2 kgs
 }
 
 abc
