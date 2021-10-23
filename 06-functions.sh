@@ -2,7 +2,7 @@
 
 function abc() {
   echo My name is Reddy
-  echo Value of a = $a
+  echo Value of a = "$a"
   b=200
 }
 
@@ -11,10 +11,8 @@ xyz () {
 }
 
 abc
-
 a=100
-
 xyz
-
 echo Value of b = $b
+
 
