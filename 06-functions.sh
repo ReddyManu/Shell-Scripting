@@ -20,5 +20,5 @@ xyz
 b=20
 echo Value of b in main program = $b
 echo First Argument in Main Program = $1
-echo The exit status of abc function is - $?
+echo The exit status of abc is - $?
 
