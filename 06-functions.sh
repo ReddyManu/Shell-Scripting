@@ -13,7 +13,8 @@ xyz () {
 }
 
 a=100
-abc Rahul
+#abc Rahul
+abc $1
 xyz
 b=20
 echo Value of b = $b
