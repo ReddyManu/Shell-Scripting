@@ -16,10 +16,9 @@ xyz () {
 a=100
 #abc Rahul
 abc $1
-xyz
-b=20
-echo The exit status of abc is - $?
+echo Exit status of abc - $?
 echo Value of b in main program = $b
+xyz
 echo First Argument in Main Program = $1
 
 
