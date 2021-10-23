@@ -5,8 +5,8 @@ function abc() {
   a=10
   echo Value of a in function = $a
   b=200
+  return 20
   echo First Argument in Function = $1
-  return 10
 }
 
 xyz () {
