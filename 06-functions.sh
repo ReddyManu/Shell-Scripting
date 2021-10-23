@@ -16,6 +16,7 @@ xyz () {
 a=100
 #abc Rahul
 abc $1
+b=20
 echo Exit status of abc - $?
 echo Value of b in main program = $b
 xyz
