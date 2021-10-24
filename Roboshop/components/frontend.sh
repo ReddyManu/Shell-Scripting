@@ -13,9 +13,10 @@ Stat $?
 Print "Starting Nginx"
 systemctl start nginx &>>$LOG
 Stat $?
-exit
 
+Print "Download HTML pages"
 curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip"
+Stat $?
 
 cd /usr/share/nginx/html
 rm -rf *
