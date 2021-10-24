@@ -13,6 +13,7 @@ then
   echo User Roboshop already exists &>>$LOG
 else
   useradd roboshop &>>$LOG
+fi
 Stat $?
 
 Print "Download Catalogue"
