@@ -8,7 +8,7 @@ Print () {
 ## In previous commit, created, above echo command without \n, which did not give space(next line) between Installing, Enabling, and Starting Nginx headings
 
 Stat () {
-  if [ $1 -eq 0 ]
+  if [ "$1" -eq "0" ]
   then
     echo -e "\e[1;32mSUCCESS\e[0m"
   else
