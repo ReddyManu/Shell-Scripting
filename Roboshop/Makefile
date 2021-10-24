@@ -28,6 +28,7 @@ shipping: git-pull ## Setup Shipping Component
 payment: git-pull ## Setup Payment Component
 	@sudo bash components/payment.sh
 
+
 frontend: git-pull ## Setup Frontend Component
 	@sudo bash components/frontend.sh
 
