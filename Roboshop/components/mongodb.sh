@@ -9,7 +9,7 @@ yum install -y mongodb-org &>>$LOG
 Stat $?
 
 Print "Update MongoDB Config"
-sed -i -e 's/127.0.0.1/0.0.0.0/g' &>>$LOG
+sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf &>>$LOG
 Stat $?
 
 Print "Enable MongoDB Service"
