@@ -19,7 +19,7 @@ rm -rf /home/roboshop/catalogue
 Stat $?
 
 Print "Extract Catalogue"
-unzip -o -d /home/roboshop /tmp/catalogue.zip
+unzip -o -d /home/roboshop /tmp/catalogue.zip &>>$LOG
 Stat $?
 
 exit
