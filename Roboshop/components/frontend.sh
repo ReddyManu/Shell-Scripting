@@ -8,7 +8,8 @@ Print() {
 ## In previous commit, created, above echo command without \n, which did not give space(next line) between Installing, Enabling, and Starting Nginx headings
 
 Stat() {
-  if [ $1 -eq 0 ]; then
+  if [ $1 -eq 0 ]
+  then
     echo -e "\e[1;32mSUCCESS\e[0m"
   else
     echo -e "\e[1;31mFAILURE\e[0m"
@@ -20,12 +21,14 @@ rm -f $LOG
 
 Print "Installing Nginx"
 yum install nginx -y &>>$LOG
-Stat $1
+Stat $?
 
 Print "Enabling Nginx"
 systemctl enable nginx
+Stat $?
 Print "Starting Nginx"
 systemctl start nginx
+Stat $?
 exit
 
 curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip"
