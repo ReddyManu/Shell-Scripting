@@ -1,12 +1,15 @@
 #!/bin/bash
-
 ## Above command is not needed as we are calling bash shell in Makefile
 
-echo -e "\e[1mInstalling Nginx\e[0m"
+Print () {
+  echo -e "\e[1m$1\e[0m"
+}
+
+Print "Installing Nginx"
 yum install nginx -y
-echo -e "\e[1mEnabling Nginx\e[0m"
+Print "Enabling Nginx"
 systemctl enable nginx
-echo -e "\e[1mStarting Nginx\e[0m"
+Print "Starting Nginx"
 systemctl start nginx
 exit
 
