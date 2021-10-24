@@ -2,7 +2,7 @@
 ## Above command is not needed as we are calling bash shell in Makefile
 
 Print () {
-  echo -e "\e[1m$1\e[0m"
+  echo -n -e "\e[1m$1\e[0m ... "
   echo -e "\n\e[36m ========================== $1 ==========================\e[0m" >>$LOG
 }
 ## In previous commit, created above echo command without \n, which did not give space(next line) between Installing, Enabling, and Starting Nginx headings
