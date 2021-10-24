@@ -3,8 +3,9 @@
 
 Print () {
   echo -e "\e[1m$1\e[0m"
-  echo -e "\e[36m ========================== $1 ==========================\e[0m" >>$LOG
+  echo -e "\n\e[36m ========================== $1 ==========================\e[0m" >>$LOG
 }
+## In previous commit, created above echo command without \n, which did not give space(next line) between Installing, Enabling, and Starting Nginx headings
 
 LOG=/tmp/roboshop.log
 rm -f $LOG
