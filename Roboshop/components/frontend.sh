@@ -23,11 +23,11 @@ LOG=/tmp/roboshop.log
 rm -f $LOG
 
 Print "Installing Nginx"
-yum install nginxx -y &>>$LOG
+yum install nginx -y &>>$LOG
 Stat $?
 
 Print "Enabling Nginx"
-systemctl enable nginx
+systemctl enable nginxx
 Stat $?
 Print "Starting Nginx"
 systemctl start nginx
