@@ -23,8 +23,9 @@ rm -rf /usr/share/nginx/html/* &>>$LOG
 Stat $?
 
 Print "Extract Frontend Archive"
-unzip -d /tmp /tmp/frontend.zip &>>$LOG
+unzip -o -d /tmp /tmp/frontend.zip &>>$LOG
 Stat $?
+## -o helps to overwrite the replace content prompt, for content inside /tmp/frontend.log file
 
 Print "Copy files to Nginx path"
 mv /tmp/frontend-main/static/* /usr/share/nginx/html/.
