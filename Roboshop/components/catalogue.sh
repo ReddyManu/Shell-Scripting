@@ -34,10 +34,12 @@ Stat $?
 
 Print "Install NodeJS dependancies"
 cd /home/roboshop/catalogue
-npm install &>>$LOG
+npm install --unsafe-perm &>>$LOG
 Stat $?
 
-NOTE: We need to update the IP address of MONGODB Server in systemd.service file
+
+
+# NOTE: We need to update the IP address of MONGODB Server in systemd.service file
 Now, lets set up the service with systemctl.
 
 # mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
