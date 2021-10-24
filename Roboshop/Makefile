@@ -9,6 +9,10 @@ help:
             printf "%-15s %s\n" $$help_command $$help_info ; \
         done
 
+git-pull:
+	@echo ---------+ Pulling Git code +---------
+	@git pull &>/dev/null
+
 cart: ## Setup Cart Component
 	@bash components/cart.sh
 
