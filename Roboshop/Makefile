@@ -10,7 +10,7 @@ help:
         done
 
 git-pull:
-	@echo ---------+ Pulling Git code +---------
+	@echo -------+ Pulling Git code +-------
 	@git pull &>/dev/null
 
 cart: git-pull ## Setup Cart Component
