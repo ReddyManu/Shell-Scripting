@@ -40,7 +40,7 @@ Stat $?
 
 
 # NOTE: We need to update the IP address of MONGODB Server in systemd.service file
-Now, lets set up the service with systemctl.
+# Now, lets set up the service with systemctl.
 
 # mv /home/roboshop/catalogue/systemd.service /etc/systemd/system/catalogue.service
 # systemctl daemon-reload
