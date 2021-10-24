@@ -15,7 +15,7 @@ systemctl start nginx &>>$LOG
 Stat $?
 
 Print "Download HTML pages"
-curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip" &>>$LOG
+curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/frontend/archive/main.zip"
 Stat $?
 
 cd /usr/share/nginx/html
