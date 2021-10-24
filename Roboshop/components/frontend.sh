@@ -13,7 +13,9 @@ Stat() {
     echo -e "\e[1;32mSUCCESS\e[0m"
   else
     echo -e "\e[1;31mFAILURE\e[0m"
+    echo -e "\e[1;33mScript Failed and check the detailed log in $LOG file\e[0m"
     exit
+
   fi
 }
 
@@ -21,14 +23,14 @@ LOG=/tmp/roboshop.log
 rm -f $LOG
 
 Print "Installing Nginx"
-yum install nginx -y &>>$LOG
+yum install nginxx -y &>>$LOG
 Stat $?
 
 Print "Enabling Nginx"
 systemctl enable nginx
 Stat $?
 Print "Starting Nginx"
-systemctl start nginxx
+systemctl start nginx
 Stat $?
 exit
 
