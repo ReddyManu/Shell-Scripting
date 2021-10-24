@@ -13,6 +13,7 @@ Stat() {
     echo -e "\e[1;32mSUCCESS\e[0m"
   else
     echo -e "\e[1;31mFAILURE\e[0m"
+    exit 1
   fi
 }
 
@@ -24,7 +25,7 @@ yum install nginx -y &>>$LOG
 Stat $?
 
 Print "Enabling Nginx"
-systemctl enable nginx
+systemctl enable nginxx
 Stat $?
 Print "Starting Nginx"
 systemctl start nginx
