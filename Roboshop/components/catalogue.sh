@@ -53,6 +53,8 @@ Print "Start Catalogue Service"
 systemctl daemon-reload &>>$LOG && systemctl restart catalogue &>>$LOG && systemctl enable catalogue &>>$LOG
 Stat $?
 
+sleep 5
+
 Print "Checking DB connections from APP"
 STAT=$(curl -s localhost:8080/health | jq .mongo)
 echo Status = $STAT
