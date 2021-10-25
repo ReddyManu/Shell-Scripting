@@ -73,7 +73,7 @@ NODEJS() {
  mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
  Stat $?
 
- Print "Start Catalogue Service"
+ Print "Start $COMPONENT_NAME Service"
  systemctl daemon-reload &>>$LOG && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
  Stat $?
 }
