@@ -4,15 +4,21 @@ source components/common.sh
 
 MSPACE=$(cat $0 | grep ^Print | awk -F '"' '{print $2}' | awk '{ print length }' | sort | tail -1)
 
-Print "Configure Redis repos"
+Print "Install Redis repos"
 yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y &>>$LOG
 Stat $?
 
-#yum-config-manager --enable remi
-# yum install redis -y
-Update the BindIP from 127.0.0.1 to 0.0.0.0 in config file /etc/redis.conf & /etc/redis/redis.conf
+Print "Enable Redis repos"
+yum-config-manager --enable remi &>>$LOG
+Stat $?
 
-Start Redis Database
+Print "Install Redis"
+yum install redis -y &>>$LOG
+Stat $?
 
-# systemctl enable redis
-# systemctl start redis
+Print "Update Redis Listen Address"
+sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/redis.conf &>>$LOG
+Stat $?
+
+Print "Start Redis Database"
+systemctl enable redis &>>$LOG && systemctl start redis &>>$LOG
