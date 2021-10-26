@@ -4,19 +4,20 @@ source components/common.sh
 
 MSPACE=$(cat $0 components/common.sh | grep Print | awk -F '"' '{print $2}' | awk '{ print length }' | sort | tail -1)
 
+
 COMPONENT_NAME=MySQL
 COMPONENT=mysql
 
-Print "Setup $COMPONENT_NAME Repo"
-curl -s -L -o /etc/yum.repos.d/mysql.repo https://raw.githubusercontent.com/roboshop-devops-project/$COMPONENT/main/mysql.repo &>>$LOG
+Print "Setup MySQL Repo"
+curl -s -L -o /etc/yum.repos.d/mysql.repo https://raw.githubusercontent.com/roboshop-devops-project/mysql/main/mysql.repo &>>$LOG
 Stat $?
 
 Print "Install MariaDB Service"
-yum remove mariadb-libs -y &>>$LOG && yum install mysql-community-server -y &>>$LOG
+yum remove mariadb-libs -y &>>$LOG  && yum install mysql-community-server -y &>>$LOG
 Stat $?
 
-Print "Start $COMPONENT_NAME Service"
-systemctl enable mysqld &>>$LOG && systemctl restart mysqld &>>$LOG
+Print "Start MySQL Service"
+systemctl enable mysqld &>>$LOG && systemctl start mysqld &>>$LOG
 Stat $?
 
 DEFAULT_PASSWORD=$(grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}')

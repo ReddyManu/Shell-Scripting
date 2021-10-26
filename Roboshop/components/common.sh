@@ -6,19 +6,17 @@ Print() {
     SPACES="$SPACES$(echo ' ')"
     SPACE=$(($SPACE-1))
   done
-  echo -n -e "\e[1m$1${SPACES}\e[0m ... "
-  echo -e "\n\e[36m ========================== $1 ==========================\e[0m" >>$LOG
+  echo -n -e "\e[1m$1${SPACES}\e[0m  ... "
+  echo -e "\n\e[36m======================== $1 ========================\e[0m" >>$LOG
 }
-## In previous commit, created, above echo command without \n, which did not give space(next line) between Installing, Enabling, and Starting Nginx headings
 
 Stat() {
-  if [ $? -eq 0 ]
-  then
+  if [ $1 -eq 0 ]; then
     echo -e "\e[1;32mSUCCESS\e[0m"
   else
     echo -e "\e[1;31mFAILURE\e[0m"
     echo -e "\e[1;33mScript Failed and check the detailed log in $LOG file\e[0m"
-    exit
+    exit 1
   fi
 }
 
@@ -43,13 +41,12 @@ DOWNLOAD() {
 }
 
 ROBOSHOP_USER() {
-  Print "Add Roboshop user"
+  Print "Add RoboShop User"
   id roboshop &>>$LOG
-  if [ $? -eq 0 ]
-  then
-    echo User Roboshop already exists &>>$LOG
+  if [ $? -eq 0 ]; then
+    echo User RoboShop already exists &>>$LOG
   else
-    useradd roboshop &>>$LOG
+    useradd roboshop  &>>$LOG
   fi
   Stat $?
 }
@@ -67,7 +64,7 @@ SYSTEMD() {
   mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
   Stat $?
 
-  Print "Start $COMPONENT_NAME Service"
+  Print "Start ${COMPONENT_NAME} Service"
   systemctl daemon-reload &>>$LOG && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
   Stat $?
 }
@@ -78,21 +75,18 @@ PYTHON() {
   Stat $?
 
   ROBOSHOP_USER
-
   DOWNLOAD "/home/roboshop"
 
   Print "Install the dependencies"
-  cd /home/roboshop/$COMPONENT
+  cd /home/roboshop/${COMPONENT}
   pip3 install -r requirements.txt &>>$LOG
   Stat $?
-
   USER_ID=$(id -u roboshop)
   GROUP_ID=$(id -g roboshop)
 
   Print "Update ${COMPONENT_NAME} Service"
-  sed -i -e "/uid/ c uid = ${USER_ID}" -e "/gid/ c gid = ${GROUP_ID}" /home/roboshop/$COMPONENT/$COMPONENT.ini &>>$LOG
+  sed -i -e "/uid/ c uid = ${USER_ID}" -e "/gid/ c gid = ${GROUP_ID}" /home/roboshop/${COMPONENT}/${COMPONENT}.ini &>>$LOG
   Stat $?
-
 
   SYSTEMD
 }
@@ -113,17 +107,16 @@ MAVEN() {
   SYSTEMD
 }
 
-
 NODEJS() {
   Print "Install NodeJS"
-  yum install nodejs make gcc-c++ -y &>>$LOG
+  yum install nodejs make gcc-c++ -y  &>>$LOG
   Stat $?
 
   ROBOSHOP_USER
 
   DOWNLOAD "/home/roboshop"
 
-  Print "Install NodeJS dependancies"
+  Print "Install NodeJS dependencies"
   cd /home/roboshop/${COMPONENT}
   npm install --unsafe-perm &>>$LOG
   Stat $?
@@ -132,27 +125,25 @@ NODEJS() {
 }
 
 CHECK_MONGO_FROM_APP() {
-  Print "Checking DB connections from APP"
+  Print "Checking DB Connections from APP"
   sleep 5
-  STAT=$(curl -s localhost:8080/health | jq .mongo)
-  if [ "$STAT" == "true" ]
-  then
+  STAT=$(curl -s localhost:8080/health  | jq .mongo)
+  if [ "$STAT" == "true" ]; then
     Stat 0
   else
     Stat 1
   fi
 }
+
 
 CHECK_REDIS_FROM_APP() {
-  Print "Checking DB connections from APP"
+  Print "Checking DB Connections from APP"
   sleep 5
-  STAT=$(curl -s localhost:8080/health | jq .redis)
-  if [ "$STAT" == "true" ]
-  then
+  STAT=$(curl -s localhost:8080/health  | jq .redis)
+  if [ "$STAT" == "true" ]; then
     Stat 0
   else
     Stat 1
   fi
 }
-
 
