@@ -90,7 +90,7 @@ PYTHON() {
   GROUP_ID=$(id -g roboshop)
 
   Print "Update ${COMPONENT_NAME} Service"
-  sed -e "/cid/ c cid = ${USER_ID}" "/gid/ c gid = ${GROUP_ID}" /home/roboshop/$COMPONENT/$COMPONENT.ini &>>$LOG
+  sed -i -e "/uid/ c uid = ${USER_ID}" -e "/gid/ c gid = ${GROUP_ID}" /home/roboshop/$COMPONENT/$COMPONENT.ini &>>$LOG
   Stat $?
 
 
