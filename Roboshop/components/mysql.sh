@@ -30,7 +30,7 @@ if [ $? -ne 0 ]; then
   Stat $?
 fi
 
-DOWNLOAD
+DOWNLOAD "/tmp"
 
 
 # curl -s -L -o /tmp/mysql.zip "https://github.com/roboshop-devops-project/mysql/archive/main.zip"
