@@ -81,7 +81,7 @@ MAVEN() {
   ROBOSHOP_USER
   DOWNLOAD "/home/roboshop"
 
-  Print "Make Maven Package"
+  Print "Make Maven package"
   cd /home/roboshop/${COMPONENT}
   mvn clean package &>>$LOG && mv target/shipping-1.0.jar shipping.jar &>>$LOG
   Stat $?
