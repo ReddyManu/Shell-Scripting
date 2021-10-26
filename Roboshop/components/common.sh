@@ -32,53 +32,78 @@ DOWNLOAD() {
   Print "Extract $COMPONENT_NAME content"
   unzip -o -d $1 /tmp/${COMPONENT}.zip &>>$LOG
   Stat $?
+  if [ "$1" == "/home/roboshop/" ]
+  then
+    Print "Remove Old Content"
+    rm -rf /home/roboshop/${COMPONENT}
+    Stat $?
+    Print "Copy content"
+    mv /home/roboshop/${COMPONENT}-main /home/roboshop/${COMPONENT}
+    Stat $?
+  fi
 }
 
+ROBOSHOP_USER() {
+  Print "Add Roboshop user"
+  id roboshop &>>$LOG
+  if [ $? -eq 0 ]
+  then
+    echo User Roboshop already exists &>>$LOG
+  else
+    useradd roboshop &>>$LOG
+  fi
+  Stat $?
+}
+
+SYSTEMD() {
+  Print "Fix App Permissions"
+  chown -R roboshop:roboshop /home/roboshop
+  Stat $?
+
+  Print "Update DNS records in SystemD config"
+  sed -i -e "s/MONGO_DNSNAME/mongodb.roboshop.internal/" -e 's/REDIS_ENDPOINT/redis.roboshop.internal/' -e 's/MONGO_ENDPOINT/mongodb.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.roboshop.internal/' -e 's/CARTENDPOINT/cart.roboshop.internal' -e 's/DBHOST/mysql.roboshop.internal' /home/roboshop/${COMPONENT}/systemd.service &>>$LOG
+  Stat $?
+
+  Print "Copy SystemD file"
+  mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
+  Stat $?
+
+  Print "Start $COMPONENT_NAME Service"
+  systemctl daemon-reload &>>$LOG && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
+  Stat $?
+}
+
+MAVEN() {
+  Print "Install Maven"
+  yum install maven -y &>>$LOG
+  Stat $?
+
+  ROBOSHOP_USER
+  DOWNLOAD "/home/roboshop"
+
+  Print " Make Maven Package"
+  cd /home/roboshop/${COMPONENT}
+  mvn clean package &>>$LOG && mv target/shipping-1.0.jar shipping.jar &>>$LOG
+  Stat $?
+  SYSTEMD
+}
+
+
 NODEJS() {
- Print "Install NodeJS"
- yum install nodejs make gcc-c++ -y &>>$LOG
- Stat $?
+  Print "Install NodeJS"
+  yum install nodejs make gcc-c++ -y &>>$LOG
+  Stat $?
 
- Print "Add Roboshop user"
- id roboshop &>>$LOG
- if [ $? -eq 0 ]
- then
-   echo User Roboshop already exists &>>$LOG
- else
-   useradd roboshop &>>$LOG
- fi
- Stat $?
+  ROBOSHOP_USER
 
- Print "Remove Old Content"
- rm -rf /home/roboshop/${COMPONENT}
- Stat $?
+  DOWNLOAD "/home/roboshop"
 
- DOWNLOAD "home/roboshop"
+  Print "Install NodeJS dependancies"
+  cd /home/roboshop/${COMPONENT}
+  npm install --unsafe-perm &>>$LOG
+  Stat $?
 
- Print "Copy content"
- mv /home/roboshop/${COMPONENT}-main /home/roboshop/${COMPONENT}
- Stat $?
-
- Print "Install NodeJS dependancies"
- cd /home/roboshop/${COMPONENT}
- npm install --unsafe-perm &>>$LOG
- Stat $?
-
- Print "Fix App Permissions"
- chown -R roboshop:roboshop /home/roboshop
- Stat $?
-
- Print "Update DNS records in SystemD config"
- sed -i -e "s/MONGO_DNSNAME/mongodb.roboshop.internal/" -e 's/REDIS_ENDPOINT/redis.roboshop.internal/' -e 's/MONGO_ENDPOINT/mongodb.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.roboshop.internal/' /home/roboshop/${COMPONENT}/systemd.service &>>$LOG
- Stat $?
-
- Print "Copy SystemD file"
- mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service
- Stat $?
-
- Print "Start $COMPONENT_NAME Service"
- systemctl daemon-reload &>>$LOG && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
- Stat $?
+  SYSTEMD
 }
 
 CHECK_MONGO_FROM_APP() {
