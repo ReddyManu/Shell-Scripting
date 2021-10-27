@@ -19,13 +19,12 @@ do
   echo fruit name = $fruit
 done
 
-echo -n "Checking connection to port 22 for Host $1"
+echo -n "Checking connection to Port 22 for Host $1"
 while true; do
-  nc -z $1 22 &>/dev/null
+  nc -w 1 -z $1 22 &>/dev/null
   if [ $? -eq 0 ]; then
     break
   fi
-  sleep 1
   echo -n '.'
 done
 
