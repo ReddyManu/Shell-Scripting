@@ -8,7 +8,8 @@ CREATE() {
   else
     echo "$1 Instance already exists"
   fi
-  # Problem with above command (under then in if else condition) is, if run for 2nd time, it brings up 2nd(ex:cart) instance. Which is not what we want. If Else condition gives a solution.
+
+  sleep 5
 
   IP=$(aws ec2 describe-instances --filters "Name=tag:Name,Values=$1" | jq ".Reservations[].Instances[].PrivateIpAddress" | grep -v null )
 
