@@ -14,7 +14,7 @@ CREATE() {
 
   sed -e "s/DNSNAME/$1.roboshop.internal/" -e "s/IPADDRESS/${IP}/" record.json >/tmp/record.json
 
-  aws route53 change-resource-record-sets --hosted-zone-id Z001660225QQOTCNZKCLY --change-batch file:///tmp/record.json | jq &>/dev/null
+  aws route53 change-resource-record-sets --hosted-zone-id Z042241811DLHPXKSVOGM --change-batch file:///tmp/record.json | jq &>/dev/null
 }
 
 if [ "$1" == "all" ]
