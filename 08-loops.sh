@@ -20,16 +20,15 @@ do
 done
 
 Print -n "Checking connection to port 22 for Host $1"
-while true
-do
+while true; do
   nc -z $1 22 &>/dev/null
-  if [ $? -eq 0 ]
-  then
+  if [ $? -eq 0 ]; then
     break
   fi
   sleep 1
   echo -n '.'
 done
+
 
 
 
