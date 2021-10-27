@@ -12,3 +12,11 @@ do
   a=$(($a-1))
 done
 
+# for loop. syntax: for var in items; do commands; done
+
+for fruit in apple grapes banana peach
+do
+  echo fruit name = $fruit
+done
+
+
